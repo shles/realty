@@ -63,8 +63,8 @@ if __name__ == '__main__':
         )
 
     db.connect()
-    db.drop_tables([RealtyItem])
-    db.create_tables([RealtyItem])
+    # db.drop_tables([RealtyItem])
+    # db.create_tables([RealtyItem])
 
     def update_base():
         current_time = datetime.datetime.now()
@@ -84,7 +84,7 @@ if __name__ == '__main__':
             r = requests.get('http://ads-api.ru/main/api', params=payload)
             print(r.url)
             print(r.status_code)
-            print(r.text)
+            # print(r.text)
             data = r.json()['data']
 
             for result in data:
@@ -93,7 +93,7 @@ if __name__ == '__main__':
                 item.last_update = current_time
 
             not_loaded_all = (len(data) == limit)
-            
+
             print('loaded', len(data))
             if not_loaded_all:
                 start_id = data[len(data)-1]['id']
@@ -108,9 +108,9 @@ if __name__ == '__main__':
 
     # for item in RealtyItem.select():
     #     print(item.title)
-    while True:
-        update_base()
-        time.sleep(60)
+
+    update_base()
+
 
 #todo: make something ciclyc
 #todo: write data to db
