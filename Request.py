@@ -2,42 +2,11 @@ import datetime
 import time
 import requests
 from peewee import *
+from Models import RealtyItem
 # from playhouse.postgres_ext import ArrayField
 if __name__ == '__main__':
 
     db = SqliteDatabase('database.db')
-
-    class BaseModel(Model):
-        class Meta:
-            database = db
-
-    class RealtyItem(BaseModel):
-        apiId = CharField()
-        originalId = CharField()
-        origin = CharField()
-        url = CharField()
-        time_appeared = DateField()
-        time_disappeared = DateField(null=True)
-
-        last_update = DateField(null=True)
-
-        title = CharField()
-        price = IntegerField()
-        phone = CharField(null=True)
-        contact_person = CharField()
-        contact_type = CharField()  # Частное лицо", "Агентство" или "Частное лицо (фильтр)"
-        city = CharField()
-        region = CharField()
-        subway = CharField()
-        address = CharField()
-        description = CharField()
-        record_type = CharField()  # Продам, Сдам, Куплю или Сниму
-        images = CharField()
-        params = CharField()
-
-        # room_count = IntegerField()
-        # floor_number = IntegerField()
-        # add other specific parameters
 
     def item_from_dict(dict):
 
