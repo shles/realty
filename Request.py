@@ -79,6 +79,9 @@ if __name__ == '__main__':
                 'user': 'temitrix@gmail.com',
                 'token': '572333657467242b484974202551fe47',
                 'limit': limit,
+                'nedvigimost_type': '2',
+                'category_id': '2',
+                'city': 'Москва',
                 'startid': start_id}
 
             r = requests.get('http://ads-api.ru/main/api', params=payload)
@@ -89,8 +92,16 @@ if __name__ == '__main__':
 
             for result in data:
                 # print(result['id'])
-                item = item_from_dict(result)
+
+                try:
+                    item = RealtyItem.select().where(RealtyItem.origin == result['source'],
+                                                     RealtyItem.originalId == result['avitoid']).get()
+                except DoesNotExist:
+                    item = item_from_dict(result)
+
                 item.last_update = current_time
+
+                item.save()
 
             not_loaded_all = (len(data) == limit)
 
